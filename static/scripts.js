@@ -1,3 +1,6 @@
+// This is a single JavaScript file housing the functions we need. This will be imported by the HTML.
+
+// this function will make an HTTP request to our app and update the element id=updatetimeresponse with the response
 function updateTime() {
   var request = new XMLHttpRequest();
   request.open('GET', 'http://localhost:8080/updatetime', true);
@@ -8,6 +11,7 @@ function updateTime() {
   request.send();
 }
 
+// this function will make an HTTP request to our app and update the element id=gettimeresponse with the response
 function getTime() {
   var request = new XMLHttpRequest();
   request.open('GET', 'http://localhost:8080/gettime', true);

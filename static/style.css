@@ -1,3 +1,5 @@
+/* This is a single CSS file housing the styling of our entire site. This will be imported by the HTML. */
+
 html {
   color: #666;
   background: #F6F6F6;

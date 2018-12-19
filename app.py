@@ -44,9 +44,8 @@ def getTime():
 
 @webApp.route('/')
 def indexRoute():
-    author = "Me"
-    name = "You"
-    return render_template('index.html', author=author, name=name)
+    title = "Project Dime Package"
+    return render_template('index.html', title=title)
 
 if __name__ == '__main__':
     webApp.run(host='0.0.0.0', port='80')
