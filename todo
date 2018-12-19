@@ -1,0 +1,7 @@
+* Rename everything to codename
+* Implement environment variables for handling host, db host, etc
+* Organize into folders: database, docker
+* Rename app to webapp
+* Turn debug mode on in dev for Flask
+* Figure out how to take Flask out of "debug" mode that it complains about
+* Change to using psycopg2-binary like it complains about?

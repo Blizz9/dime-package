@@ -1,0 +1,13 @@
+html {
+  color: #666;
+  background: #F6F6F6;
+}
+
+#root {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.button {
+  background: rgb(255, 255, 0)
+}
