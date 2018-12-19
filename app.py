@@ -2,9 +2,10 @@ from flask import Flask, Response, render_template
 import psycopg2
 import requests
 
-app = Flask(__name__)
+webApp = Flask(__name__)
+webApp.debug = True
 
-@app.route("/updatetime")
+@webApp.route("/updatetime")
 def updateTime():
     timeAPIResponse = requests.get("http://worldclockapi.com/api/json/est/now")
     timeString = timeAPIResponse.json()['currentDateTime']
@@ -23,7 +24,7 @@ def updateTime():
         status=200,        
     )
 
-@app.route("/gettime")
+@webApp.route("/gettime")
 def getTime():
     dbConnection = psycopg2.connect(host="dime-package-db", database="dime_package", user="postgres", password="dimepackagepassword")
     dbCursor = dbConnection.cursor()
@@ -41,11 +42,11 @@ def getTime():
         status=200,        
     )
 
-@app.route('/')
+@webApp.route('/')
 def indexRoute():
     author = "Me"
     name = "You"
     return render_template('index.html', author=author, name=name)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port='80')
+    webApp.run(host='0.0.0.0', port='80')

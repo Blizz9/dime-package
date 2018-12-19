@@ -1,6 +1,2 @@
 * Implement environment variables for handling host, db host, etc
-* Rename app to webapp
-* Turn debug mode on in dev for Flask
-* Figure out how to take Flask out of "debug" mode that it complains about
-* Change to using psycopg2-binary like it complains about?
 * Figure out DB password situation. ENV VARs?
