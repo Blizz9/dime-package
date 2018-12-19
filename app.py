@@ -9,7 +9,7 @@ def updateTime():
     timeAPIResponse = requests.get("http://worldclockapi.com/api/json/est/now")
     timeString = timeAPIResponse.json()['currentDateTime']
 
-    dbConnection = psycopg2.connect(host="football-db", database="football", user="postgres", password="footballpassword")
+    dbConnection = psycopg2.connect(host="dime-package-db", database="dime_package", user="postgres", password="dimepackagepassword")
     dbCursor = dbConnection.cursor()
 
     dbCursor.execute("""UPDATE world_time SET time = %s WHERE id = 1;""", (timeString,))
@@ -25,7 +25,7 @@ def updateTime():
 
 @app.route("/gettime")
 def getTime():
-    dbConnection = psycopg2.connect(host="football-db", database="football", user="postgres", password="footballpassword")
+    dbConnection = psycopg2.connect(host="dime-package-db", database="dime_package", user="postgres", password="dimepackagepassword")
     dbCursor = dbConnection.cursor()
 
     dbCursor.execute("SELECT time FROM world_time WHERE id = 1")

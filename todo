@@ -1,4 +1,3 @@
-* Rename everything to codename
 * Implement environment variables for handling host, db host, etc
 * Organize into folders: database, docker
 * Rename app to webapp
