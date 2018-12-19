@@ -1,5 +1,5 @@
 build:
-	docker build -t dime-package .
+	docker build -f ./docker/Dockerfile -t dime-package .
 
 run: stop build
 	docker network ls -f name=ecs | grep -q ecs || docker network create ecs
@@ -12,16 +12,16 @@ logs:
 	docker logs -f dime-package
 
 init-db: drop-db run-db
-	cat ./buildscript.sql ./stagingscript.sql > ./final-buildscript.sql
-	docker cp ./final-buildscript.sql dime-package-db:/var/lib/postgresql
-	rm ./final-buildscript.sql
+	cat ./database/buildscript.sql ./database/stagingscript.sql > ./database/final-buildscript.sql
+	docker cp ./database/final-buildscript.sql dime-package-db:/var/lib/postgresql
+	rm ./database/final-buildscript.sql
 	docker exec dime-package-db psql -U postgres -d dime_package -f /var/lib/postgresql/final-buildscript.sql
 	make stop-db
 
 run-db: stop-db
 	docker network ls -f name=ecs | grep -q ecs || docker network create ecs
 	docker run -d --rm --name dime-package-db -p 5432:5432 --net ecs -v dime-package-db:/var/lib/postgresql/data -e POSTGRES_DB=dime_package -e POSTGRES_PASSWORD=dimepackagepassword postgres:latest
-	docker cp ./wait-for-it.sh dime-package-db:/usr/local/bin
+	docker cp ./docker/wait-for-it.sh dime-package-db:/usr/local/bin
 	docker exec dime-package-db /usr/local/bin/wait-for-it.sh localhost:5432 -t 60 -- sleep 2s
 
 stop-db:
