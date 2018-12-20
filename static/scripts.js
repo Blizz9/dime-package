@@ -3,7 +3,7 @@
 // this function will make an HTTP request to our app and update the element id=updatetimeresponse with the response
 function updateTime() {
   var request = new XMLHttpRequest();
-  request.open('GET', 'http://localhost:8080/updatetime', true);
+  request.open('GET', '/updatetime', true);
   request.onload = function () {
     var updateTimeResponseTextField = document.getElementById("updatetimeresponse");
     updateTimeResponseTextField.innerHTML = this.response;
@@ -14,7 +14,7 @@ function updateTime() {
 // this function will make an HTTP request to our app and update the element id=gettimeresponse with the response
 function getTime() {
   var request = new XMLHttpRequest();
-  request.open('GET', 'http://localhost:8080/gettime', true);
+  request.open('GET', '/gettime', true);
   request.onload = function () {
     var getTimeResponseTextField = document.getElementById("gettimeresponse");
     getTimeResponseTextField.innerHTML = this.response;

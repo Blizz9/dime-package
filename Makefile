@@ -7,7 +7,7 @@ build:
 # stops, builds, and runs our app's docker container; used for development testing
 run: stop build
 	docker network ls -f name=ecs | grep -q ecs || docker network create ecs
-	docker run -d --rm --name dime-package -p 8080:80 --net ecs dime-package:latest
+	docker run -d --rm --name dime-package -p 8080:80 --net ecs -e FLASK_DEBUG=1 -e HOST=0.0.0.0 -e PORT=80 -e DB_CONNECTION_STRING="host=dime-package-db dbname=dime_package user=postgres password=dimepackagepassword" dime-package:latest
 
 # stops our app's docker container
 stop:

@@ -1,15 +1,22 @@
 # this imports the package we are using as a web server
 from flask import Flask, Response, render_template
 
+# this imports the package we are using for some minor OS stuff
+import os
+
 # this imports the package we are using as a DB access layer
 import psycopg2
 
 # this imports the package we are using as an HTTP request helper
 import requests
 
+# this reads all of the environment variables
+host = os.environ['HOST']
+port = os.environ['PORT']
+dbConnectionString = os.environ['DB_CONNECTION_STRING']
+
 # this defines our flask app, named 'webApp'
 webApp = Flask(__name__)
-webApp.debug = True
 
 # this function serves the '/updatetime' endpoint; it queries a free world clock web api for the current time and then
 # stores what it retreived into the DB; it returns a 200 status code with a nice little message about the retreived
@@ -21,7 +28,7 @@ def updateTime():
     timeString = timeAPIResponse.json()['currentDateTime']
 
     # create a connection to the DB
-    dbConnection = psycopg2.connect(host="dime-package-db", database="dime_package", user="postgres", password="dimepackagepassword")
+    dbConnection = psycopg2.connect(dbConnectionString)
     dbCursor = dbConnection.cursor()
 
     # execute an UPDATE SQL statement on the world_time table in the DB, injecting the proper time string
@@ -44,7 +51,7 @@ def updateTime():
 @webApp.route("/gettime")
 def getTime():
     # create a connection to the DB
-    dbConnection = psycopg2.connect(host="dime-package-db", database="dime_package", user="postgres", password="dimepackagepassword")
+    dbConnection = psycopg2.connect(dbConnectionString)
     dbCursor = dbConnection.cursor()
 
     # execute a SELECT SQL statement on the world_time table in the DB retreiving the current time string
@@ -71,4 +78,4 @@ def indexRoute():
 
 # run our webApp server on the specified host and port
 if __name__ == '__main__':
-    webApp.run(host='0.0.0.0', port='80')
+    webApp.run(host=host, port=port)

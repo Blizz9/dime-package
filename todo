@@ -1,2 +1,0 @@
-* Implement environment variables for handling host, db host, etc
-* Figure out DB password situation. ENV VARs?
