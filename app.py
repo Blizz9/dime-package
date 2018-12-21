@@ -10,6 +10,8 @@ import psycopg2
 # this imports the package we are using as an HTTP request helper
 import requests
 
+from sportsreference.ncaaf.teams import Teams
+
 # this reads all of the environment variables
 host = os.environ['HOST']
 port = os.environ['PORT']
@@ -43,7 +45,7 @@ def updateTime():
     # give an HTTP response with a nice message and the retreived and stored time string
     return Response(
         "Web API queried successfully and DB record updated successfully: " + timeString,
-        status=200,        
+        status=200,
     )
 
 # this function serves the '/gettime' endpoint; it queries the DB for the current stored time and returns a 200 status
@@ -65,7 +67,27 @@ def getTime():
     # give an HTTP response with a nice message and the retreived time string
     return Response(
         "DB queried successfully - Time: " + row[0],
-        status=200,        
+        status=200,
+    )
+
+@webApp.route("/updateteams")
+def updateTeams():
+    dbConnection = psycopg2.connect(dbConnectionString)
+    dbCursor = dbConnection.cursor()
+
+    dbCursor.execute("""TRUNCATE TABLE teams;""")
+
+    teams = Teams(2018)
+    for team in teams:
+        dbCursor.execute("""INSERT INTO teams VALUES(DEFAULT, %s, %s, %s);""", (team._year, team.name, team.conference,))
+    dbConnection.commit()
+
+    dbCursor.close()
+    dbConnection.close()
+
+    return Response(
+        "All teams updated to database successfully",
+        status=200,
     )
 
 # this function serves the '/' endpoint; it serves index.html from the ./templates directory with a few values injected

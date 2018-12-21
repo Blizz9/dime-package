@@ -21,3 +21,13 @@ function getTime() {
   };
   request.send();
 }
+
+function updateTeams() {
+  var request = new XMLHttpRequest();
+  request.open('GET', '/updateteams', true);
+  request.onload = function () {
+    var updateTeamsResponseTextField = document.getElementById("updateteamsresponse");
+    updateTeamsResponseTextField.innerHTML = this.response;
+  };
+  request.send();
+}

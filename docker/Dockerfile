@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y \
     pip install --upgrade pip
 
 # some Python packages we are using
-RUN pip install flask && pip install psycopg2-binary && pip install requests
+RUN pip install flask && pip install psycopg2-binary && pip install requests && pip install sportsreference
 
 # this is the port our app is being served on and allows it to communicate out of the container
 EXPOSE 80
